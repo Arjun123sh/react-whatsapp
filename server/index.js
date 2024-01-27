@@ -7,12 +7,20 @@ const cloudinary = require("./config/cloudinary");
 const http = require("http");
 const { Server } = require("socket.io");
 
+
 const AuhtRoutes = require("./routes/AuthRoutes")
 const profileRoutes = require("./routes/ProfileRoutes")
 const chatRoutes = require("./routes/ChatRoutes")
 const userRoutes = require("./routes/UserRoutes")
 
 const app = express()
+const httpServer = http.createServer(app);
+const io = new Server(httpServer, {
+    cors: {
+      origins: "*",
+      methods: ["GET", "POST"]
+    }
+})
 
 dotenv.config()
 
@@ -23,8 +31,10 @@ app.use(express.json({
     limit: '150mb'
 }));
 
-app.use(cors({origin: true, credentials: true}));
-
+app.use(cors({
+    origin:"*",
+    methods:['POST','PUT','GET','DELETE']
+}))
 app.use(fileUpload({useTempFiles: true}))
 app.use(express.urlencoded({
     extended : false
@@ -80,6 +90,6 @@ io.on("connection", (socket) => {
     })
   });
   
-app.listen(PORT,()=>{
+httpServer.listen(PORT,()=>{
     console.log(`Server is running `)
 });
