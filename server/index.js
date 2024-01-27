@@ -24,10 +24,8 @@ app.use(express.json({
     limit: '150mb'
 }));
 
-app.use(cors({
-    origin:"*",
-    methods:['POST','PUT','GET','DELETE']
-}))
+app.use(cors({origin: true, credentials: true}));
+
 app.use(fileUpload({useTempFiles: true}))
 app.use(express.urlencoded({
     extended : false
