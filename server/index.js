@@ -13,7 +13,6 @@ const chatRoutes = require("./routes/ChatRoutes")
 const userRoutes = require("./routes/UserRoutes")
 
 const app = express()
-const httpServer = http.createServer(app);
 
 dotenv.config()
 
@@ -81,6 +80,6 @@ io.on("connection", (socket) => {
     })
   });
   
-httpServer.listen(PORT,()=>{
+app.listen(PORT,()=>{
     console.log(`Server is running `)
 });
