@@ -14,12 +14,7 @@ const userRoutes = require("./routes/UserRoutes")
 
 const app = express()
 const httpServer = http.createServer(app);
-const io = new Server(httpServer, {
-    cors: {
-      origins: "*",
-      methods: ["GET", "POST"]
-    }
-})
+
 dotenv.config()
 
 const PORT = process.env.PORT || 4000;
@@ -27,9 +22,11 @@ console.log(PORT)
 
 app.use(express.json({
     limit: '150mb'
-  }));
+}));
+
 app.use(cors({
     origin:"*",
+    methods:['POST','PUT','GET','DELETE']
 }))
 app.use(fileUpload({useTempFiles: true}))
 app.use(express.urlencoded({
